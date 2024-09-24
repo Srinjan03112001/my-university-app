@@ -35,80 +35,41 @@ export default function NavBar() {
 
   return (
     <nav className="fixed h-auto w-full z-50 bg-transparent text-white">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="container mx-auto pl-6 py-4 flex justify-between items-center">
         <div className="flex items-center">
-          <Link href="/" className="text-2xl font-bold">
+          <Link href="/" className="text-2xl font-bold flex flex-row">
           <Image
               src={logo.src}// Make sure this is correct, relative to your `public` folder
               alt="CIEM Society Logo"
               width={100} // Width in pixels
               height={100} // Height in pixels
               className="rounded-full"
-            />
+            /><h1 className="text-3xl pl-2 pt-8">Society</h1>
           </Link>
         </div>
 
-        {/* Main Navigation Links */}
+        {/* Home Button */}
         <ul className="flex-grow hidden md:flex justify-center space-x-6">
-          <li
-            className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
-              pathname === "/" ? "border-b-2 border-white" : ""
-            }`}
-          >
-            <Link href="/" className="hover:text-gray-300">
-              Home
-            </Link>
-          </li>
-
-          <li
-            className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
-              pathname === "/about" ? "border-b-2 border-white" : ""
-            }`}
-          >
-            <Link href="/about" className="hover:text-gray-300">
-              About
-            </Link>
-          </li>
-
-          <li
-            className="relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300"
-            onMouseEnter={() => handleMouseEnter("academics")}
-            onMouseLeave={handleMouseLeave}
-          >
-            <span
-              className={`cursor-pointer hover:text-gray-300 ${
-                pathname.includes("/academics") ? "border-b-2 border-white" : ""
+        <Link href="/" className="hover:text-opacity-0">
+            <li
+              className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
+                pathname === "/" ? "border-b-2 border-white" : ""
               }`}
             >
-              Academics
-            </span>
-            <AnimatePresence>
-              {dropdownOpen === "academics" && (
-                <motion.div
-                  className="absolute top-full mt-2 bg-white text-black rounded-md shadow-lg py-2 w-40"
-                  initial={{ scaleY: 0, opacity: 0 }}
-                  animate={{ scaleY: 1, opacity: 1 }}
-                  exit={{ scaleY: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, originY: 0 }}
-                >
-                  <ul>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">M.S. In Nursing</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">M.A. English</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">Master Of Public Health</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">Department Of English</Link>
-                    </li>
-                  </ul>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </li>
+                Home
+            </li>
+          </Link>
+
+          {/* About Button */}
+          <Link href="/about" className="hover:text-opacity-0">
+            <li
+              className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
+                pathname === "/about" ? "border-b-2 border-white" : ""
+              }`}
+            >
+                About
+            </li>
+          </Link>
 
           <li
             className="relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300"
@@ -116,7 +77,7 @@ export default function NavBar() {
             onMouseLeave={handleMouseLeave}
           >
             <span
-              className={`cursor-pointer hover:text-gray-300 ${
+              className={`cursor-pointer hover:text-opacity-0 ${
                 pathname.includes("/colleges") ? "border-b-2 border-white" : ""
               }`}
             >
@@ -132,17 +93,71 @@ export default function NavBar() {
                   transition={{ duration: 0.3, originY: 0 }}
                 >
                   <ul>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">CIEM</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">CISM</Link>
-                    </li>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        CIEM
+                      </li>
+                    </Link>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        CISM
+                      </li>
+                    </Link>
                   </ul>
                 </motion.div>
               )}
             </AnimatePresence>
           </li>
+              {/* Academics Button */}
+          <li
+            className="relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300"
+            onMouseEnter={() => handleMouseEnter("academics")}
+            onMouseLeave={handleMouseLeave}
+          >
+            <span
+              className={`cursor-pointer hover:text-opacity-0 ${
+                pathname.includes("/academics") ? "border-b-2 border-white" : ""
+              }`}
+            >
+              Academics
+            </span>
+            <AnimatePresence>
+              {dropdownOpen === "academics" && (
+                <motion.div
+                  className="absolute top-full mt-2 bg-white text-black rounded-md shadow-lg py-2 w-40"
+                  initial={{ scaleY: 0, opacity: 0 }}
+                  animate={{ scaleY: 1, opacity: 1 }}
+                  exit={{ scaleY: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, originY: 0 }}
+                >
+                  <ul>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        M.S. In Nursing
+                      </li>
+                    </Link>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        M.A. English
+                      </li>
+                    </Link>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        Master Of Public Health
+                      </li>
+                    </Link>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        Department Of English
+                      </li>
+                    </Link>
+                  </ul>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </li>
+
+          {/* Events Button */}
 
           <li
             className="relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300"
@@ -150,7 +165,7 @@ export default function NavBar() {
             onMouseLeave={handleMouseLeave}
           >
             <span
-              className={`cursor-pointer hover:text-gray-300 ${
+              className={`cursor-pointer hover:text-opacity-0 ${
                 pathname.includes("/events") ? "border-b-2 border-white" : ""
               }`}
             >
@@ -166,27 +181,32 @@ export default function NavBar() {
                   transition={{ duration: 0.3, originY: 0 }}
                 >
                   <ul>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">Upcoming Events</Link>
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-200">
-                      <Link href="/">Past Events</Link>
-                    </li>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        Upcoming Events
+                      </li>
+                    </Link>
+                    <Link href="/">
+                      <li className="px-4 py-2 hover:bg-gray-200">
+                        Past Events
+                      </li>
+                    </Link>
                   </ul>
                 </motion.div>
               )}
             </AnimatePresence>
           </li>
 
+              {/* Contacts Button */}
+          <Link href="/contact" className="hover:text-opacity-0">
           <li
             className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
               pathname === "/contact" ? "border-b-2 border-white" : ""
             }`}
           >
-            <Link href="/contact" className="hover:text-gray-300">
               Contact
-            </Link>
           </li>
+          </Link>
         </ul>
 
         {/* Hamburger Menu for Mobile */}
