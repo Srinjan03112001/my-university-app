@@ -1,9 +1,11 @@
 "use client"; // Add this to make it a Client Component
 
+import Image from 'next/image';
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // Updated import
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "../../../public/ciem-logo.png";
 
 export default function NavBar() {
   const [dropdownOpen, setDropdownOpen] = useState(null);
@@ -36,7 +38,13 @@ export default function NavBar() {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold">
-            CIEM Society
+          <Image
+              src={logo.src}// Make sure this is correct, relative to your `public` folder
+              alt="CIEM Society Logo"
+              width={100} // Width in pixels
+              height={100} // Height in pixels
+              className="rounded-full"
+            />
           </Link>
         </div>
 
