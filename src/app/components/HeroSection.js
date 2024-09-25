@@ -1,13 +1,12 @@
-// components/HeroSection.js
 "use client";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import img1 from "../../../public/img-1.png";
-import img2 from "../../../public/img-2.jpg";
-import img3 from "../../../public/img-3.jpg";
-import img4 from "../../../public/img-4.jpg";
+import img1 from "../../../public/Home/img-1.png";
+import img2 from "../../../public/Home/img-2.jpg";
+import img3 from "../../../public/Home/img-3.jpg";
+import img4 from "../../../public/Home/img-4.jpg";
 import AnimatedText from "./AnimatedText"; // Import the AnimatedText component
 
 const images = [
@@ -49,17 +48,18 @@ export default function HeroSection() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }} // Duration for fade transition
         >
-          <Image
-            src={images[currentIndex].src}
-            alt={`Slide ${currentIndex}`}
-            layout="fill"
-            objectFit="cover"
-            className="w-full h-full"
-            style={{ opacity: 0.5 }} // Set image opacity to 50%
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src={images[currentIndex].src}
+              alt={`Slide ${currentIndex}`}
+              fill
+              style={{ objectFit: "cover", opacity: 0.5 }} // Cover the full area, with 50% opacity
+              priority // Ensures the image is loaded quickly as it's in the hero section
+            />
+          </div>
           {/* Render the AnimatedText component with the corresponding text */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <AnimatedText text={images[currentIndex].text}/>
+            <AnimatedText text={images[currentIndex].text} />
           </div>
         </motion.div>
       </AnimatePresence>
@@ -83,7 +83,9 @@ export default function HeroSection() {
         {images.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${currentIndex === index ? "bg-white" : "bg-gray-400"}`}
+            className={`w-3 h-3 rounded-full ${
+              currentIndex === index ? "bg-white" : "bg-gray-400"
+            }`}
             onClick={() => setCurrentIndex(index)}
           />
         ))}
