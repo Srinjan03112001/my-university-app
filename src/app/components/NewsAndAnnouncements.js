@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from "framer-motion";
 import ActiveSlider from "./ActiveSlider";
 
+
 export default function NewsAndAnnouncements() {
   // Announcements state
   const [announcements] = useState([
@@ -60,7 +61,7 @@ export default function NewsAndAnnouncements() {
 
         {/* Right: News Carousel (2/3rd of screen) */}
         <div className="md:w-3/4 bg-transparent p-6 rounded-lg mx-4 flex flex-col items-center">
-          <h2 className="text-xl font-semibold mb-4 text-white text-center">News</h2>
+          <h2 className="text-xl font-semibold mb-4 text-white text-center">News & Articles</h2>
           <ActiveSlider />
         </div>
       </div>

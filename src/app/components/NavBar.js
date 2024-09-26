@@ -10,7 +10,9 @@ import logo from "../../../public/ciem-logo.png";
 export default function NavBar() {
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
-  const pathname = usePathname(); // Get current pat
+  const [navBackground, setNavBackground] = useState("bg-transparent");
+  const pathname = usePathname(); // Get current path
+  const [navShadow, setNavShadow] = useState(""); // State for shadow
 
   const handleMouseEnter = (menu) => {
     setDropdownOpen(menu);
@@ -33,30 +35,50 @@ export default function NavBar() {
     }
   }, [isHovering]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSectionHeight = 200; // Adjust this value to match the height of your Hero section
+      if (window.scrollY > heroSectionHeight) {
+        setNavBackground("bg-slate-850 bg-opacity-90");
+        setNavShadow("shadow-lg"); // Add shadow when background is not transparent
+      } else {
+        setNavBackground("bg-transparent");
+        setNavShadow(""); // Remove shadow when background is transparent
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="fixed h-auto w-full z-50 bg-transparent text-white">
+    <nav className={`fixed h-auto w-full z-50 ${navBackground} text-white transition-all duration-300`}>
       <div className="container mx-auto pl-6 py-4 flex justify-between items-center">
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold flex flex-row">
-          <Image
-              src={logo.src}// Make sure this is correct, relative to your `public` folder
+            <Image
+              src={logo.src} // Make sure this is correct, relative to your `public` folder
               alt="CIEM Society Logo"
               width={100} // Width in pixels
               height={100} // Height in pixels
               className="rounded-full"
-            /><h1 className="text-3xl pl-2 pt-8">Society</h1>
+            />
+            <h1 className="text-3xl pl-2 pt-8">Society</h1>
           </Link>
         </div>
 
         {/* Home Button */}
         <ul className="flex-grow hidden md:flex justify-center space-x-6">
-        <Link href="/" className="hover:text-opacity-0">
+          <Link href="/" className="hover:text-opacity-0">
             <li
               className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
                 pathname === "/" ? "border-b-2 border-white" : ""
               }`}
             >
-                Home
+              Home
             </li>
           </Link>
 
@@ -67,10 +89,11 @@ export default function NavBar() {
                 pathname === "/about" ? "border-b-2 border-white" : ""
               }`}
             >
-                About
+              About
             </li>
           </Link>
 
+          {/* Colleges Button */}
           <li
             className="relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300"
             onMouseEnter={() => handleMouseEnter("colleges")}
@@ -94,21 +117,18 @@ export default function NavBar() {
                 >
                   <ul>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        CIEM
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">CIEM</li>
                     </Link>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        CISM
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">CISM</li>
                     </Link>
                   </ul>
                 </motion.div>
               )}
             </AnimatePresence>
           </li>
-              {/* Academics Button */}
+
+          {/* Academics Button */}
           <li
             className="relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300"
             onMouseEnter={() => handleMouseEnter("academics")}
@@ -132,24 +152,16 @@ export default function NavBar() {
                 >
                   <ul>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        M.S. In Nursing
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">M.S. In Nursing</li>
                     </Link>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        M.A. English
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">M.A. English</li>
                     </Link>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        Master Of Public Health
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">Master Of Public Health</li>
                     </Link>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        Department Of English
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">Department Of English</li>
                     </Link>
                   </ul>
                 </motion.div>
@@ -158,7 +170,6 @@ export default function NavBar() {
           </li>
 
           {/* Events Button */}
-
           <li
             className="relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300"
             onMouseEnter={() => handleMouseEnter("events")}
@@ -182,14 +193,10 @@ export default function NavBar() {
                 >
                   <ul>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        Upcoming Events
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">Upcoming Events</li>
                     </Link>
                     <Link href="/">
-                      <li className="px-4 py-2 hover:bg-gray-200">
-                        Past Events
-                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-200">Past Events</li>
                     </Link>
                   </ul>
                 </motion.div>
@@ -197,15 +204,15 @@ export default function NavBar() {
             </AnimatePresence>
           </li>
 
-              {/* Contacts Button */}
+          {/* Contacts Button */}
           <Link href="/contact" className="hover:text-opacity-0">
-          <li
-            className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
-              pathname === "/contact" ? "border-b-2 border-white" : ""
-            }`}
-          >
+            <li
+              className={`relative hover:bg-gray-700 hover:opacity-90 px-6 py-2 rounded-md transition-all duration-300 ${
+                pathname === "/contact" ? "border-b-2 border-white" : ""
+              }`}
+            >
               Contact
-          </li>
+            </li>
           </Link>
         </ul>
 
@@ -223,64 +230,12 @@ export default function NavBar() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={dropdownOpen === "mobile" ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+                d="M4 6h16M4 12h16m-7 6h7"
               />
             </svg>
           </button>
         </div>
       </div>
-
-      {/* Mobile Navigation */}
-      {dropdownOpen === "mobile" && (
-        <div className="md:hidden">
-          <ul className="flex flex-col space-y-2 px-6 py-4 bg-white text-black">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <button
-                onClick={() => setDropdownOpen(dropdownOpen === "mobile-colleges" ? null : "mobile-colleges")}
-                className="hover:text-gray-700"
-              >
-                Colleges
-              </button>
-              {dropdownOpen === "mobile-colleges" && (
-                <ul className="pl-4">
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/">CIEM</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/">CISM</Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li>
-              <button
-                onClick={() => setDropdownOpen(dropdownOpen === "mobile-events" ? null : "mobile-events")}
-                className="hover:text-gray-700"
-              >
-                Events
-              </button>
-              {dropdownOpen === "mobile-events" && (
-                <ul className="pl-4">
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/">Upcoming Events</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/">Past Events</Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-gray-700">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </div>
-      )}
     </nav>
   );
 }
