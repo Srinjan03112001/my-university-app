@@ -37,25 +37,26 @@ export default function NavBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const heroSectionHeight = 200; // Adjust this value to match the height of your Hero section
+      const heroSectionHeight = 100; // Adjust this value to match the height of your Hero section
       if (window.scrollY > heroSectionHeight) {
-        setNavBackground("bg-slate-850 bg-opacity-90");
+        setNavBackground("bg-slate-800 bg-opacity-90");
         setNavShadow("shadow-lg"); // Add shadow when background is not transparent
       } else {
         setNavBackground("bg-transparent");
         setNavShadow(""); // Remove shadow when background is transparent
       }
     };
-
+  
     window.addEventListener("scroll", handleScroll);
-
+  
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  
 
   return (
-    <nav className={`fixed h-auto w-full z-50 ${navBackground} text-white transition-all duration-300`}>
+    <nav className={`fixed h-auto w-full z-50 ${navBackground} ${navShadow} text-white transition-[background-color,box-shadow] duration-300 ease-in-out`}>
       <div className="container mx-auto pl-6 py-4 flex justify-between items-center">
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold flex flex-row">
